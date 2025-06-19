@@ -1,4 +1,3 @@
-
 // Mobile Navigation
 document.addEventListener('DOMContentLoaded', function() {
     const navToggle = document.getElementById('navToggle');
@@ -43,12 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // WhatsApp integration
+    // WhatsApp integration with updated phone number
     const whatsappLinks = document.querySelectorAll('#whatsapp-link, .whatsapp-float a');
     whatsappLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            const phone = '525512345678';
-            const message = 'Hola, me interesa obtener información sobre los préstamos de CréditoFácil MX';
+            const phone = '15144161603'; // Updated to your phone number
+            const message = 'Hola, me interesa obtener información sobre los préstamos de World Credit Elite';
             const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
             
             if (link.getAttribute('href') === '#' || link.id === 'whatsapp-link') {
@@ -293,4 +292,4 @@ window.addEventListener('load', function() {
     }, 0);
 });
 
-console.log('CréditoFácil MX - Main JavaScript loaded successfully');
+console.log('World Credit Elite - Main JavaScript loaded successfully');

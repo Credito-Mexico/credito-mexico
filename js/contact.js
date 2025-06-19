@@ -1,7 +1,7 @@
 // Contact Form Logic with Email.js Integration
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize EmailJS
-    emailjs.init("YOUR_EMAILJS_USER_ID"); // Replace with your actual EmailJS user ID
+    // Initialize EmailJS with your public key
+    emailjs.init("_oTxApvSNAxlvXZJu"); // Replace with your actual EmailJS user ID
     
     const contactForm = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -39,8 +39,13 @@ document.addEventListener('DOMContentLoaded', function() {
         setLoadingState(true);
         
         try {
-            // Verify reCAPTCHA
-            const recaptchaToken = await verifyRecaptcha();
+            // Verify reCAPTCHA (optional - can be skipped if not configured)
+            let recaptchaToken = '';
+            try {
+                recaptchaToken = await verifyRecaptcha();
+            } catch (e) {
+                console.log('reCAPTCHA not configured, proceeding without it');
+            }
             
             // Prepare form data
             const formData = collectFormData();
@@ -165,6 +170,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function verifyRecaptcha() {
         return new Promise((resolve, reject) => {
+            if (typeof grecaptcha === 'undefined') {
+                reject('reCAPTCHA not loaded');
+                return;
+            }
+            
             grecaptcha.ready(() => {
                 grecaptcha.execute('6LfXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', { action: 'loan_application' })
                     .then(token => {
@@ -178,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function sendEmail(formData) {
         const templateParams = {
-            to_email: 'info@creditofacil.mx', // Replace with your email
+            to_email: 'worldcreditelite@gmail.com',
             from_name: formData.fullName,
             from_email: formData.email,
             phone: formData.phone,
@@ -192,14 +202,14 @@ document.addEventListener('DOMContentLoaded', function() {
             marketing_consent: formData.marketing ? 'Sí' : 'No'
         };
         
-        // Send to company
+        // Send notification to company using your template
         await emailjs.send(
-            'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-            'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+            'service_i9indwn',
+            'template_8w52yov',
             templateParams
         );
         
-        // Send confirmation to customer
+        // Send confirmation to customer using your template
         const customerParams = {
             to_email: formData.email,
             customer_name: formData.fullName,
@@ -209,8 +219,8 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         
         await emailjs.send(
-            'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-            'YOUR_CUSTOMER_TEMPLATE_ID', // Replace with your customer confirmation template ID
+            'service_i9indwn',
+            'template_loy3yej',
             customerParams
         );
         
@@ -414,13 +424,13 @@ document.addEventListener('click', function(e) {
 
 // Quick contact functions
 function callNow() {
-    window.location.href = 'tel:+525512345678';
+    window.location.href = 'tel:+15144161603';
     trackEvent('phone_call_initiated');
 }
 
 function chatWhatsApp() {
-    const message = 'Hola, me interesa obtener más información sobre los préstamos de CréditoFácil MX';
-    const whatsappUrl = `https://wa.me/525512345678?text=${encodeURIComponent(message)}`;
+    const message = 'Hola, me interesa obtener más información sobre los préstamos de World Credit Elite';
+    const whatsappUrl = `https://wa.me/15144161603?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     trackEvent('whatsapp_chat_initiated');
 }

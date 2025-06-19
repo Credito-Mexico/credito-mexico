@@ -1,5 +1,4 @@
-
-// Loan Simulator Logic
+// Loan Simulator Logic with reduced interest rates
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
     const amountSlider = document.getElementById('amount');
@@ -24,34 +23,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load saved values from localStorage or URL parameters
     loadSavedValues();
     
-    // Interest rate calculation based on amount and term
+    // Interest rate calculation with very affordable rates
     function calculateInterestRate(amount, termMonths) {
-        let baseRate = 15; // Base rate 15%
+        let baseRate = 6; // Much lower base rate 6% instead of 15%
         
-        // Rate adjustments based on amount
+        // Rate adjustments based on amount - very competitive rates
         if (amount >= 2000000) {
-            baseRate = 13;
+            baseRate = 4; // Premium rate for large amounts
         } else if (amount >= 1000000) {
-            baseRate = 14;
+            baseRate = 5;
         } else if (amount >= 500000) {
-            baseRate = 15;
+            baseRate = 6;
         } else if (amount >= 200000) {
-            baseRate = 16;
+            baseRate = 7;
         } else {
-            baseRate = 18;
+            baseRate = 8; // Still very affordable for smaller amounts
         }
         
-        // Rate adjustments based on term
+        // Rate adjustments based on term - minimal impact
         if (termMonths <= 12) {
-            baseRate += 2; // Shorter terms have higher rates
+            baseRate += 1; // Shorter terms slightly higher
         } else if (termMonths <= 24) {
-            baseRate += 1;
+            baseRate += 0.5;
         } else if (termMonths >= 60) {
-            baseRate -= 1; // Longer terms have lower rates
+            baseRate -= 0.5; // Longer terms get discount
         }
         
-        // Ensure rate stays within reasonable bounds
-        return Math.max(13, Math.min(20, baseRate));
+        // Ensure rate stays within very affordable bounds
+        return Math.max(4, Math.min(9, baseRate));
     }
     
     // Monthly payment calculation using PMT formula
@@ -279,7 +278,7 @@ function shareSimulation() {
     const rate = calculateInterestRate(amount, term);
     const monthly = calculateMonthlyPayment(amount, rate, term);
     
-    const shareText = `Simulación de Préstamo CréditoFácil MX:
+    const shareText = `Simulación de Préstamo World Credit Elite:
 Monto: ${formatCurrency(amount)}
 Plazo: ${term} meses
 Pago mensual: ${formatCurrency(monthly)}
@@ -314,7 +313,7 @@ function printSimulation() {
     const printContent = `
         <html>
         <head>
-            <title>Simulación de Préstamo - CréditoFácil MX</title>
+            <title>Simulación de Préstamo - World Credit Elite</title>
             <style>
                 body { font-family: Arial, sans-serif; margin: 40px; }
                 .header { text-align: center; margin-bottom: 30px; }
@@ -327,7 +326,7 @@ function printSimulation() {
         </head>
         <body>
             <div class="header">
-                <div class="logo">CréditoFácil MX</div>
+                <div class="logo">World Credit Elite</div>
                 <h2>Simulación de Préstamo</h2>
                 <p>Fecha: ${new Date().toLocaleDateString('es-MX')}</p>
             </div>
@@ -363,7 +362,7 @@ function printSimulation() {
             
             <div class="footer">
                 <p>Esta simulación es únicamente informativa. Las condiciones finales pueden variar según la evaluación crediticia.</p>
-                <p>CréditoFácil MX - Tel: +52 55 1234 5678 - info@creditofacil.mx</p>
+                <p>World Credit Elite - Tel: +1 (514) 416-1603 - worldcreditelite@gmail.com</p>
             </div>
         </body>
         </html>
