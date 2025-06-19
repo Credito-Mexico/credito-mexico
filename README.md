@@ -1,12 +1,13 @@
 
-# CréditoFácil MX - Sitio Web de Préstamos
+# World Credit Elite - Sitio Web de Préstamos
 
-Un sitio web completo para una empresa de préstamos personales en México, desarrollado con HTML5, CSS3 y JavaScript vanilla.
+Un sitio web completo para World Credit Elite, empresa de préstamos personales con las tasas más competitivas del mercado, desarrollado con HTML5, CSS3 y JavaScript vanilla.
 
 ## 🚀 Características
 
 ### Funcionalidades Principales
 - **Simulador de Préstamos**: Calculadora interactiva con sliders para monto ($50,000 - $5,000,000) y plazo (3-84 meses)
+- **Tasas Ultra Competitivas**: 4% - 9% anual (las más bajas del mercado)
 - **Formulario de Contacto**: Integración con Email.js y validación client-side
 - **Diseño Responsive**: Mobile-first con Flexbox y CSS Grid
 - **Integración WhatsApp**: Botón flotante y enlaces directos
@@ -34,7 +35,7 @@ Un sitio web completo para una empresa de préstamos personales en México, desa
 ## 📁 Estructura del Proyecto
 
 ```
-creditofacil-mx/
+world-credit-elite/
 ├── index.html              # Página principal
 ├── simulador.html          # Simulador de préstamos
 ├── contact.html            # Formulario de contacto
@@ -52,38 +53,23 @@ creditofacil-mx/
 └── README.md
 ```
 
-## ⚙️ Configuración
+## ⚙️ Configuración Actual
 
-### 1. Email.js Setup
-1. Crea una cuenta en [EmailJS](https://www.emailjs.com/)
-2. Configura tu servicio de email (Gmail, Outlook, etc.)
-3. Crea templates para:
-   - Notificación a la empresa
-   - Confirmación al cliente
-4. Reemplaza en `js/contact.js`:
-   ```javascript
-   emailjs.init("YOUR_EMAILJS_USER_ID");
-   // ...
-   'YOUR_SERVICE_ID'
-   'YOUR_TEMPLATE_ID'
-   ```
+### Email.js Configurado
+- **Public Key**: _oTxApvSNAxlvXZJu
+- **Service ID**: service_i9indwn
+- **Template Notificación**: template_8w52yov
+- **Template Confirmación**: template_loy3yej
 
-### 2. reCAPTCHA v3 Setup
-1. Obtén claves en [Google reCAPTCHA](https://www.google.com/recaptcha/)
-2. Reemplaza en los archivos HTML:
-   ```html
-   <script src="https://www.google.com/recaptcha/api.js?render=YOUR_SITE_KEY"></script>
-   ```
-3. Actualiza en `js/contact.js`:
-   ```javascript
-   grecaptcha.execute('YOUR_SITE_KEY', { action: 'loan_application' })
-   ```
+### Información de Contacto
+- **Teléfono**: +1 (514) 416-1603
+- **Email**: worldcreditelite@gmail.com
+- **WhatsApp**: +15144161603
 
-### 3. Personalización
-- **Colores**: Modifica las variables CSS en `:root`
-- **Tasas de interés**: Ajusta en `js/simulator.js`
-- **Información de contacto**: Actualiza números de teléfono y emails
-- **Términos legales**: Revisa y ajusta según tu jurisdicción
+### Tasas de Interés Ultra Competitivas
+- **$50,000 - $200,000**: 7% - 8% anual
+- **$200,001 - $1,000,000**: 5% - 7% anual
+- **$1,000,001 - $5,000,000**: 4% - 5% anual
 
 ## 🎨 Características del Diseño
 
@@ -107,11 +93,12 @@ creditofacil-mx/
 
 ### Simulador de Préstamos
 - Cálculo de pagos mensuales con fórmula PMT
-- Tasas variables según monto y plazo
+- Tasas ultra competitivas (4% - 9% anual)
 - Persistencia en localStorage
 - Compartir simulaciones
 
 ### Formulario de Contacto
+- Integración Email.js completa
 - Validación en tiempo real
 - Formateo automático de teléfono
 - Guardado de borradores
@@ -132,7 +119,7 @@ creditofacil-mx/
 - Formularios de contacto del oficial de privacidad
 
 ### Mejores Prácticas
-- Validación client-side y server-side recomendada
+- Validación client-side implementada
 - reCAPTCHA v3 para protección
 - Encriptación SSL requerida
 - Sanitización de entradas
@@ -152,29 +139,35 @@ creditofacil-mx/
 trackEvent('loan_simulation', {
     amount: 500000,
     term: 24,
-    rate: 18.0
+    rate: 6.0
 });
 ```
 
 ## 🚀 Deployment
 
-### Hosting Estático
-El sitio puede desplegarse en cualquier servicio de hosting estático:
-- Netlify
-- Vercel
-- GitHub Pages
-- Firebase Hosting
+### Hosting Estático Gratuito
+El sitio puede desplegarse gratuitamente en:
+- **Netlify** (Recomendado)
+- **Vercel**
+- **GitHub Pages**
+- **Firebase Hosting**
+
+### Pasos para Netlify (Gratis)
+1. Crear cuenta en netlify.com
+2. Arrastrar carpeta del proyecto
+3. Configurar dominio personalizado (opcional)
+4. SSL automático incluido
 
 ### Configuración Requerida
 1. Subir todos los archivos al servidor
 2. Configurar redirects para SPA (opcional)
-3. Habilitar SSL/HTTPS
+3. Habilitar SSL/HTTPS (automático en Netlify)
 4. Configurar headers de seguridad
 
 ## 🔧 Mantenimiento
 
 ### Tareas Regulares
-- Actualizar tasas de interés
+- Actualizar tasas de interés si es necesario
 - Revisar formularios de contacto
 - Actualizar términos legales
 - Monitorear analytics
@@ -189,14 +182,14 @@ El sitio puede desplegarse en cualquier servicio de hosting estático:
 ## 📞 Soporte
 
 Para soporte técnico o consultas sobre implementación:
-- Email: desarrollo@creditofacil.mx
-- Documentación: Ver archivos incluidos
-- Issues: Revisar código comentado
+- **Email**: worldcreditelite@gmail.com
+- **Teléfono**: +1 (514) 416-1603
+- **WhatsApp**: +15144161603
 
 ## 📄 Licencia
 
-Este proyecto está desarrollado específicamente para CréditoFácil MX. Todos los derechos reservados.
+Este proyecto está desarrollado específicamente para World Credit Elite. Todos los derechos reservados.
 
 ---
 
-**Nota**: Recuerda personalizar todos los datos de contacto, términos legales y configuraciones antes del despliegue en producción.
+**Nota**: El sitio está listo para producción con todas las configuraciones aplicadas. Solo necesitas desplegarlo en tu servicio de hosting preferido.
