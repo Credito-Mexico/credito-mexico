@@ -1,73 +1,202 @@
-# Welcome to your Lovable project
 
-## Project info
+# CréditoFácil MX - Sitio Web de Préstamos
 
-**URL**: https://lovable.dev/projects/4a2c9f8b-cb29-4282-9428-7b1b10036a68
+Un sitio web completo para una empresa de préstamos personales en México, desarrollado con HTML5, CSS3 y JavaScript vanilla.
 
-## How can I edit this code?
+## 🚀 Características
 
-There are several ways of editing your application.
+### Funcionalidades Principales
+- **Simulador de Préstamos**: Calculadora interactiva con sliders para monto ($50,000 - $5,000,000) y plazo (3-84 meses)
+- **Formulario de Contacto**: Integración con Email.js y validación client-side
+- **Diseño Responsive**: Mobile-first con Flexbox y CSS Grid
+- **Integración WhatsApp**: Botón flotante y enlaces directos
+- **Validación reCAPTCHA v3**: Protección contra spam
+- **Cumplimiento Legal**: Páginas de términos, privacidad y LFPDPPP
 
-**Use Lovable**
+### Páginas Incluidas
+1. **index.html** - Página principal con hero, beneficios y CTA
+2. **simulador.html** - Calculadora de préstamos interactiva
+3. **contact.html** - Formulario de solicitud con validaciones
+4. **faq.html** - Preguntas frecuentes con acordeón
+5. **terminos.html** - Términos y condiciones completos
+6. **privacidad.html** - Aviso de privacidad conforme LFPDPPP
+7. **compromisos.html** - Compromisos de la empresa
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/4a2c9f8b-cb29-4282-9428-7b1b10036a68) and start prompting.
+## 🛠️ Tecnologías Utilizadas
 
-Changes made via Lovable will be committed automatically to this repo.
+- **HTML5**: Estructura semántica y accesible
+- **CSS3**: Diseño moderno con variables CSS, Flexbox y Grid
+- **JavaScript ES6+**: Funcionalidades interactivas
+- **Email.js**: Envío de emails sin backend
+- **Google reCAPTCHA v3**: Protección contra bots
+- **Google Fonts**: Tipografía Inter para mejor legibilidad
 
-**Use your preferred IDE**
+## 📁 Estructura del Proyecto
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+creditofacil-mx/
+├── index.html              # Página principal
+├── simulador.html          # Simulador de préstamos
+├── contact.html            # Formulario de contacto
+├── faq.html               # Preguntas frecuentes
+├── terminos.html          # Términos y condiciones
+├── privacidad.html        # Aviso de privacidad
+├── compromisos.html       # Compromisos de la empresa
+├── css/
+│   └── styles.css         # Estilos principales
+├── js/
+│   ├── main.js           # Funcionalidades principales
+│   ├── simulator.js      # Lógica del simulador
+│   ├── contact.js        # Manejo del formulario
+│   └── faq.js           # Acordeón de FAQ
+└── README.md
 ```
 
-**Edit a file directly in GitHub**
+## ⚙️ Configuración
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 1. Email.js Setup
+1. Crea una cuenta en [EmailJS](https://www.emailjs.com/)
+2. Configura tu servicio de email (Gmail, Outlook, etc.)
+3. Crea templates para:
+   - Notificación a la empresa
+   - Confirmación al cliente
+4. Reemplaza en `js/contact.js`:
+   ```javascript
+   emailjs.init("YOUR_EMAILJS_USER_ID");
+   // ...
+   'YOUR_SERVICE_ID'
+   'YOUR_TEMPLATE_ID'
+   ```
 
-**Use GitHub Codespaces**
+### 2. reCAPTCHA v3 Setup
+1. Obtén claves en [Google reCAPTCHA](https://www.google.com/recaptcha/)
+2. Reemplaza en los archivos HTML:
+   ```html
+   <script src="https://www.google.com/recaptcha/api.js?render=YOUR_SITE_KEY"></script>
+   ```
+3. Actualiza en `js/contact.js`:
+   ```javascript
+   grecaptcha.execute('YOUR_SITE_KEY', { action: 'loan_application' })
+   ```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### 3. Personalización
+- **Colores**: Modifica las variables CSS en `:root`
+- **Tasas de interés**: Ajusta en `js/simulator.js`
+- **Información de contacto**: Actualiza números de teléfono y emails
+- **Términos legales**: Revisa y ajusta según tu jurisdicción
 
-## What technologies are used for this project?
+## 🎨 Características del Diseño
 
-This project is built with:
+### Sistema de Colores
+- **Primario**: Verde (`#059669`) - Confianza y crecimiento
+- **Secundario**: Azul (`#1e40af`) - Profesionalismo
+- **Acento**: Amarillo (`#f59e0b`) - Llamadas a la acción
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Responsive Design
+- **Mobile First**: Optimizado para dispositivos móviles
+- **Breakpoints**: 768px, 1024px, 1200px
+- **Flexbox y Grid**: Layout moderno y flexible
 
-## How can I deploy this project?
+### Accesibilidad
+- Contraste mínimo AA
+- Navegación por teclado
+- Textos alternativos
+- Tamaños de toque adecuados
 
-Simply open [Lovable](https://lovable.dev/projects/4a2c9f8b-cb29-4282-9428-7b1b10036a68) and click on Share -> Publish.
+## 📱 Funcionalidades Específicas
 
-## Can I connect a custom domain to my Lovable project?
+### Simulador de Préstamos
+- Cálculo de pagos mensuales con fórmula PMT
+- Tasas variables según monto y plazo
+- Persistencia en localStorage
+- Compartir simulaciones
 
-Yes, you can!
+### Formulario de Contacto
+- Validación en tiempo real
+- Formateo automático de teléfono
+- Guardado de borradores
+- Mensajes de error en español
+- Modal de confirmación
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### FAQ Interactivo
+- Acordeón con categorías
+- Función de búsqueda
+- Enlaces directos a preguntas
+- Seguimiento de interacciones
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🔒 Seguridad y Cumplimiento
+
+### LFPDPPP (Ley Federal de Protección de Datos)
+- Aviso de privacidad completo
+- Derechos ARCO claramente explicados
+- Formularios de contacto del oficial de privacidad
+
+### Mejores Prácticas
+- Validación client-side y server-side recomendada
+- reCAPTCHA v3 para protección
+- Encriptación SSL requerida
+- Sanitización de entradas
+
+## 📊 Analytics y Tracking
+
+### Eventos Configurados
+- Interacciones del simulador
+- Envíos de formularios
+- Navegación entre páginas
+- Errores JavaScript
+- Tiempo de carga
+
+### Implementación
+```javascript
+// Ejemplo de tracking
+trackEvent('loan_simulation', {
+    amount: 500000,
+    term: 24,
+    rate: 18.0
+});
+```
+
+## 🚀 Deployment
+
+### Hosting Estático
+El sitio puede desplegarse en cualquier servicio de hosting estático:
+- Netlify
+- Vercel
+- GitHub Pages
+- Firebase Hosting
+
+### Configuración Requerida
+1. Subir todos los archivos al servidor
+2. Configurar redirects para SPA (opcional)
+3. Habilitar SSL/HTTPS
+4. Configurar headers de seguridad
+
+## 🔧 Mantenimiento
+
+### Tareas Regulares
+- Actualizar tasas de interés
+- Revisar formularios de contacto
+- Actualizar términos legales
+- Monitorear analytics
+- Backup de configuraciones
+
+### Actualizaciones Recomendadas
+- Revisar dependencias (Email.js, reCAPTCHA)
+- Actualizar contenido legal anualmente
+- Optimizar imágenes y performance
+- Probar en nuevos dispositivos/navegadores
+
+## 📞 Soporte
+
+Para soporte técnico o consultas sobre implementación:
+- Email: desarrollo@creditofacil.mx
+- Documentación: Ver archivos incluidos
+- Issues: Revisar código comentado
+
+## 📄 Licencia
+
+Este proyecto está desarrollado específicamente para CréditoFácil MX. Todos los derechos reservados.
+
+---
+
+**Nota**: Recuerda personalizar todos los datos de contacto, términos legales y configuraciones antes del despliegue en producción.

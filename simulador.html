@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Préstamos - CréditoFácil México</title>
+    <meta name="description" content="Simula tu préstamo personal en México. Calcula tu mensualidad con montos desde $50,000 hasta $5,000,000 pesos.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-brand">
+                <h2>CréditoFácil MX</h2>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="simulador.html" class="nav-link active">Simulador</a></li>
+                <li><a href="contact.html" class="nav-link">Contacto</a></li>
+                <li><a href="faq.html" class="nav-link">FAQ</a></li>
+            </ul>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Simulator Section -->
+    <section class="simulator">
+        <div class="container">
+            <div class="simulator-header">
+                <h1>Simulador de Préstamos</h1>
+                <p>Calcula tu préstamo ideal y conoce tu mensualidad al instante</p>
+            </div>
+
+            <div class="simulator-content">
+                <div class="simulator-controls">
+                    <div class="control-group">
+                        <label for="amount">Monto del Préstamo</label>
+                        <div class="slider-container">
+                            <input 
+                                type="range" 
+                                id="amount" 
+                                min="50000" 
+                                max="5000000" 
+                                value="500000" 
+                                step="10000"
+                                class="slider"
+                            >
+                            <div class="slider-labels">
+                                <span>$50,000</span>
+                                <span>$5,000,000</span>
+                            </div>
+                        </div>
+                        <div class="amount-display">
+                            <span class="currency">$</span>
+                            <input type="text" id="amountDisplay" value="500,000" readonly>
+                            <span class="currency">MXN</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="term">Plazo (meses)</label>
+                        <div class="slider-container">
+                            <input 
+                                type="range" 
+                                id="term" 
+                                min="3" 
+                                max="84" 
+                                value="24" 
+                                step="1"
+                                class="slider"
+                            >
+                            <div class="slider-labels">
+                                <span>3 meses</span>
+                                <span>84 meses</span>
+                            </div>
+                        </div>
+                        <div class="term-display">
+                            <input type="text" id="termDisplay" value="24" readonly>
+                            <span>meses</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="simulator-results">
+                    <div class="result-card">
+                        <h3>Resumen de tu Préstamo</h3>
+                        
+                        <div class="result-item">
+                            <span class="label">Monto Solicitado:</span>
+                            <span class="value" id="resultAmount">$500,000 MXN</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="label">Plazo:</span>
+                            <span class="value" id="resultTerm">24 meses</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="label">Tasa de Interés Anual:</span>
+                            <span class="value" id="resultRate">18.0%</span>
+                        </div>
+                        
+                        <div class="result-item highlight">
+                            <span class="label">Pago Mensual:</span>
+                            <span class="value" id="resultMonthly">$25,500 MXN</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="label">Total a Pagar:</span>
+                            <span class="value" id="resultTotal">$612,000 MXN</span>
+                        </div>
+                        
+                        <div class="result-item">
+                            <span class="label">Intereses Totales:</span>
+                            <span class="value" id="resultInterest">$112,000 MXN</span>
+                        </div>
+
+                        <div class="result-actions">
+                            <a href="contact.html" class="btn btn-primary btn-large" id="solicitarBtn">
+                                Solicitar Este Préstamo
+                            </a>
+                            <button class="btn btn-outline" onclick="resetSimulator()">
+                                Nuevo Cálculo
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h4>Información Importante</h4>
+                        <ul>
+                            <li>✓ Aprobación en máximo 24 horas</li>
+                            <li>✓ Sin comisiones por apertura</li>
+                            <li>✓ Transferencia inmediata una vez aprobado</li>
+                            <li>✓ Pagos fijos mensuales</li>
+                            <li>✓ Sin penalizaciones por pago anticipado</li>
+                        </ul>
+                        
+                        <div class="rate-info">
+                            <p><strong>Tasa de Interés Variable según monto y plazo:</strong></p>
+                            <ul>
+                                <li>$50,000 - $200,000: 15% - 20% anual</li>
+                                <li>$200,001 - $1,000,000: 14% - 18% anual</li>
+                                <li>$1,000,001 - $5,000,000: 13% - 16% anual</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CréditoFácil MX</h3>
+                    <p>Tu aliado financiero en México. Préstamos rápidos, seguros y transparentes.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                        <li><a href="faq.html">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terminos.html">Términos y Condiciones</a></li>
+                        <li><a href="privacidad.html">Aviso de Privacidad</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p>📞 +52 55 1234 5678</p>
+                    <p>✉️ info@creditofacil.mx</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CréditoFácil MX. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <div class="whatsapp-float" id="whatsappFloat">
+        <a href="https://wa.me/525512345678" target="_blank" rel="noopener">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.525 3.687z"/>
+            </svg>
+        </a>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/simulator.js"></script>
+</body>
+</html>
