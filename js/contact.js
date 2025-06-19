@@ -1,12 +1,12 @@
 // Contact Form Logic with Email.js Integration
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize EmailJS with your public key
-    emailjs.init("vZCo0rTMocJMXT_nt"); // <-- TA PUBLIC KEY
+    // Initialize EmailJS with your new public key
+    emailjs.init("vZCo0rTMocJMXT_nt"); // <-- NOUVELLE PUBLIC KEY
 
     // === Service & Template IDs ===
-    const EMAILJS_SERVICE_ID = "service_nczkuv2"; // <-- TON SERVICE ID ACTUEL
-    const EMAILJS_TEMPLATE_COMPANY = "template_8w52yov";
-    const EMAILJS_TEMPLATE_CUSTOMER = "template_loy3yej";
+    const EMAILJS_SERVICE_ID = "service_6hpr5qs"; // <-- NOUVEAU SERVICE ID
+    const EMAILJS_TEMPLATE_ADMIN = "template_t5y3udk";       // notification admin
+    const EMAILJS_TEMPLATE_CLIENT = "template_ht0c5y9";      // confirmation client
 
     const contactForm = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -99,8 +99,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear previous errors
         document.querySelectorAll('.error-message').forEach(el => {
             el.classList.remove('show');
+            el.textContent = "";
         });
-        document.querySelectorAll('input, select').forEach(el => {
+        document.querySelectorAll('input, select, textarea').forEach(el => {
             el.classList.remove('error');
         });
 
@@ -159,6 +160,50 @@ document.addEventListener('DOMContentLoaded', function() {
         return isValid;
     }
 
+    function showError(field, message) {
+        const errorEl = document.getElementById(field + 'Error');
+        const inputEl = document.getElementById(field);
+        if (errorEl) {
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+        }
+        if (inputEl) {
+            inputEl.classList.add('error');
+        }
+    }
+
+    function hideError(field) {
+        const errorEl = document.getElementById(field + 'Error');
+        const inputEl = document.getElementById(field);
+        if (errorEl) {
+            errorEl.textContent = "";
+            errorEl.classList.remove('show');
+        }
+        if (inputEl) {
+            inputEl.classList.remove('error');
+        }
+    }
+
+    function showToast(message, type = 'info') {
+        // Simple toast version: replace with a library if you want
+        let toast = document.createElement('div');
+        toast.className = 'toast toast-' + type;
+        toast.innerText = message;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.remove(); }, 4000);
+    }
+
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function validatePhone(phone) {
+        // Accepts 10+ digits, spaces, +, -, (, )
+        const cleaned = phone.replace(/\D/g, '');
+        return cleaned.length >= 10;
+    }
+
     function collectFormData() {
         return {
             fullName: document.getElementById('fullName').value.trim(),
@@ -179,9 +224,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return '';
     }
 
+    // Nouvelle fonction pour générer un numéro de référence
+    function generateReferenceNumber() {
+        return 'REF-' + Math.floor(Math.random() * 10000000);
+    }
+
     async function sendEmail(formData) {
-        const templateParams = {
-            to_email: 'worldcreditelite@gmail.com',
+        // 1. Email notification admin
+        const adminParams = {
             from_name: formData.fullName,
             from_email: formData.email,
             phone: formData.phone,
@@ -190,20 +240,19 @@ document.addEventListener('DOMContentLoaded', function() {
             income: formData.income,
             purpose: formData.purpose,
             comments: formData.comments,
-            reference: formData.reference_number,
+            marketing_consent: formData.marketing ? 'Sí' : 'No',
             submission_date: new Date().toLocaleString('es-MX'),
-            marketing_consent: formData.marketing ? 'Sí' : 'No'
+            reference: formData.reference_number
         };
 
-        // Send notification to company using your template
         await emailjs.send(
             EMAILJS_SERVICE_ID,
-            EMAILJS_TEMPLATE_COMPANY,
-            templateParams
+            EMAILJS_TEMPLATE_ADMIN,
+            adminParams
         );
 
-        // Send confirmation to customer using your template
-        const customerParams = {
+        // 2. Email confirmation client
+        const clientParams = {
             to_email: formData.email,
             customer_name: formData.fullName,
             reference: formData.reference_number,
@@ -213,11 +262,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         await emailjs.send(
             EMAILJS_SERVICE_ID,
-            EMAILJS_TEMPLATE_CUSTOMER,
-            customerParams
+            EMAILJS_TEMPLATE_CLIENT,
+            clientParams
         );
 
         console.log('Emails sent successfully');
+    }
+
+    function setLoadingState(loading) {
+        if (loading) {
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'inline-block';
+        } else {
+            submitBtn.disabled = false;
+            btnText.style.display = 'inline';
+            btnLoader.style.display = 'none';
+        }
     }
 
     function loadSimulationData() {
@@ -335,18 +396,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             this.value = value;
         });
-    }
-
-    function setLoadingState(loading) {
-        if (loading) {
-            submitBtn.disabled = true;
-            btnText.style.display = 'none';
-            btnLoader.style.display = 'inline-block';
-        } else {
-            submitBtn.disabled = false;
-            btnText.style.display = 'inline';
-            btnLoader.style.display = 'none';
-        }
     }
 
     function saveSubmissionData(formData) {
@@ -471,5 +520,34 @@ setInterval(() => {
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(loadFormDraft, 1000);
 });
+
+// --- Fonctions utilitaires additionnelles ---
+
+function trackEvent(event, params = {}) {
+    // Ajoute ici ton propre tracking si tu utilises GA, Matomo, etc.
+    // Ex: gtag('event', event, params);
+    console.log('Event tracked:', event, params);
+}
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    const results = regex.exec(window.location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+function getFromLocalStorage(key) {
+    try {
+        return JSON.parse(localStorage.getItem(key));
+    } catch (e) {
+        return null;
+    }
+}
+
+function saveToLocalStorage(key, value) {
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {}
+}
 
 console.log('Contact form JavaScript loaded successfully');
