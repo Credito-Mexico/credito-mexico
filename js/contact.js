@@ -1,7 +1,7 @@
 // Contact Form Logic with Email.js Integration
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize EmailJS with your public key
-    emailjs.init("_oTxApvSNAxlvXZJu"); // <-- TA PUBLIC KEY
+    emailjs.init("vZCo0rTMocJMXT_nt"); // <-- TA PUBLIC KEY
 
     // === Service & Template IDs ===
     const EMAILJS_SERVICE_ID = "service_nczkuv2"; // <-- TON SERVICE ID ACTUEL
