@@ -1,43 +1,48 @@
 // Contact Form Logic with Email.js Integration
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize EmailJS with your public key
-    emailjs.init("_oTxApvSNAxlvXZJu"); // Replace with your actual EmailJS user ID
-    
+    emailjs.init("_oTxApvSNAxlvXZJu"); // <-- TA PUBLIC KEY
+
+    // === Service & Template IDs ===
+    const EMAILJS_SERVICE_ID = "service_nczkuv2"; // <-- TON SERVICE ID ACTUEL
+    const EMAILJS_TEMPLATE_COMPANY = "template_8w52yov";
+    const EMAILJS_TEMPLATE_CUSTOMER = "template_loy3yej";
+
     const contactForm = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
     const btnText = document.querySelector('.btn-text');
     const btnLoader = document.querySelector('.btn-loader');
-    
+
     // Load simulation data if available
     loadSimulationData();
-    
+
     // Form submission handler
     if (contactForm) {
         contactForm.addEventListener('submit', handleFormSubmit);
     }
-    
+
     // Real-time validation
     setupRealTimeValidation();
-    
+
     // Phone number formatting
     setupPhoneFormatting();
-    
+
     console.log('Contact form initialized');
-    
+
     async function handleFormSubmit(e) {
         e.preventDefault();
-        
+
         console.log('Form submission started');
-        
+
         // Validate form
         if (!validateForm()) {
             showToast('Por favor, corrige los errores en el formulario', 'error');
             return;
         }
-        
+
         // Show loading state
         setLoadingState(true);
-        
+
         try {
             // Désactivation temporaire de reCAPTCHA
             let recaptchaToken = '';
@@ -46,40 +51,40 @@ document.addEventListener('DOMContentLoaded', function() {
             } catch (e) {
                 console.log('reCAPTCHA not configured, proceeding without it');
             }
-            
+
             // Prepare form data
             const formData = collectFormData();
             formData.recaptcha_token = recaptchaToken;
             formData.reference_number = generateReferenceNumber();
             formData.submission_date = new Date().toISOString();
-            
+
             console.log('Sending form data:', formData);
-            
+
             // Send email via EmailJS
             await sendEmail(formData);
-            
+
             // Save submission data
             saveSubmissionData(formData);
-            
+
             // Show success
             showSuccessModal(formData.reference_number);
-            
+
             // Reset form
             contactForm.reset();
-            
+
             // Track conversion
             trackEvent('loan_application_submitted', {
                 amount_range: formData.loanAmount,
                 term_range: formData.loanTerm,
                 reference: formData.reference_number
             });
-            
+
             console.log('Form submitted successfully');
-            
+
         } catch (error) {
             console.error('Form submission error:', error);
             showToast('Error al enviar la solicitud. Por favor, inténtalo de nuevo.', 'error');
-            
+
             trackEvent('form_submission_error', {
                 error: error.message
             });
@@ -87,10 +92,10 @@ document.addEventListener('DOMContentLoaded', function() {
             setLoadingState(false);
         }
     }
-    
+
     function validateForm() {
         let isValid = true;
-        
+
         // Clear previous errors
         document.querySelectorAll('.error-message').forEach(el => {
             el.classList.remove('show');
@@ -98,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('input, select').forEach(el => {
             el.classList.remove('error');
         });
-        
+
         // Full name validation
         const fullName = document.getElementById('fullName').value.trim();
         if (!fullName || fullName.length < 3) {
@@ -108,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showError('fullName', 'El nombre solo puede contener letras y espacios');
             isValid = false;
         }
-        
+
         // Email validation
         const email = document.getElementById('email').value.trim();
         if (!email) {
@@ -118,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showError('email', 'Por favor, ingresa un correo electrónico válido');
             isValid = false;
         }
-        
+
         // Phone validation
         const phone = document.getElementById('phone').value.trim();
         if (!phone) {
@@ -128,32 +133,32 @@ document.addEventListener('DOMContentLoaded', function() {
             showError('phone', 'Por favor, ingresa un teléfono válido (10 dígitos mínimo)');
             isValid = false;
         }
-        
+
         // Loan amount validation
         const loanAmount = document.getElementById('loanAmount').value;
         if (!loanAmount) {
             showError('loanAmount', 'Selecciona el monto deseado');
             isValid = false;
         }
-        
+
         // Loan term validation
         const loanTerm = document.getElementById('loanTerm').value;
         if (!loanTerm) {
             showError('loanTerm', 'Selecciona el plazo deseado');
             isValid = false;
         }
-        
+
         // Privacy policy validation
         const privacy = document.getElementById('privacy').checked;
         if (!privacy) {
             showError('privacy', 'Debes aceptar el Aviso de Privacidad y Términos y Condiciones');
             isValid = false;
         }
-        
+
         console.log('Form validation result:', isValid);
         return isValid;
     }
-    
+
     function collectFormData() {
         return {
             fullName: document.getElementById('fullName').value.trim(),
@@ -167,13 +172,13 @@ document.addEventListener('DOMContentLoaded', function() {
             marketing: document.getElementById('marketing').checked
         };
     }
-    
+
     // --- Désactivation temporaire de reCAPTCHA ---
     async function verifyRecaptcha() {
         // Désactivation temporaire : on renvoie juste une chaîne vide
         return '';
     }
-    
+
     async function sendEmail(formData) {
         const templateParams = {
             to_email: 'worldcreditelite@gmail.com',
@@ -189,14 +194,14 @@ document.addEventListener('DOMContentLoaded', function() {
             submission_date: new Date().toLocaleString('es-MX'),
             marketing_consent: formData.marketing ? 'Sí' : 'No'
         };
-        
+
         // Send notification to company using your template
         await emailjs.send(
-            'service_i9indwn',
-            'template_8w52yov',
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_COMPANY,
             templateParams
         );
-        
+
         // Send confirmation to customer using your template
         const customerParams = {
             to_email: formData.email,
@@ -205,29 +210,29 @@ document.addEventListener('DOMContentLoaded', function() {
             loan_amount: formData.loanAmount,
             loan_term: formData.loanTerm
         };
-        
+
         await emailjs.send(
-            'service_i9indwn',
-            'template_loy3yej',
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_CUSTOMER,
             customerParams
         );
-        
+
         console.log('Emails sent successfully');
     }
-    
+
     function loadSimulationData() {
         // Load from URL parameters first
         const urlAmount = getUrlParameter('amount');
         const urlTerm = getUrlParameter('term');
         const urlMonthly = getUrlParameter('monthly');
-        
+
         if (urlAmount && urlTerm) {
             setLoanAmountFromValue(parseInt(urlAmount));
             setLoanTermFromValue(parseInt(urlTerm));
             console.log('Loaded simulation data from URL');
             return;
         }
-        
+
         // Then try localStorage
         const savedData = getFromLocalStorage('lastSimulation');
         if (savedData && savedData.amount && savedData.term) {
@@ -236,39 +241,39 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Loaded simulation data from localStorage');
         }
     }
-    
+
     function setLoanAmountFromValue(amount) {
         const loanAmountSelect = document.getElementById('loanAmount');
         if (!loanAmountSelect) return;
-        
+
         const options = loanAmountSelect.options;
         for (let i = 0; i < options.length; i++) {
             const option = options[i];
             const [min, max] = option.value.split('-').map(v => parseInt(v));
-            
+
             if (amount >= min && (max ? amount <= max : true)) {
                 loanAmountSelect.value = option.value;
                 break;
             }
         }
     }
-    
+
     function setLoanTermFromValue(term) {
         const loanTermSelect = document.getElementById('loanTerm');
         if (!loanTermSelect) return;
-        
+
         const options = loanTermSelect.options;
         for (let i = 0; i < options.length; i++) {
             const option = options[i];
             const [min, max] = option.value.split('-').map(v => parseInt(v));
-            
+
             if (term >= min && term <= max) {
                 loanTermSelect.value = option.value;
                 break;
             }
         }
     }
-    
+
     function setupRealTimeValidation() {
         // Full name validation
         const fullNameInput = document.getElementById('fullName');
@@ -278,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 hideError('fullName');
             }
         });
-        
+
         // Email validation
         const emailInput = document.getElementById('email');
         emailInput.addEventListener('blur', function() {
@@ -287,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 hideError('email');
             }
         });
-        
+
         // Phone validation
         const phoneInput = document.getElementById('phone');
         phoneInput.addEventListener('blur', function() {
@@ -296,26 +301,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 hideError('phone');
             }
         });
-        
+
         // Select validations
         document.getElementById('loanAmount').addEventListener('change', function() {
             if (this.value) hideError('loanAmount');
         });
-        
+
         document.getElementById('loanTerm').addEventListener('change', function() {
             if (this.value) hideError('loanTerm');
         });
-        
+
         document.getElementById('privacy').addEventListener('change', function() {
             if (this.checked) hideError('privacy');
         });
     }
-    
+
     function setupPhoneFormatting() {
         const phoneInput = document.getElementById('phone');
         phoneInput.addEventListener('input', function() {
             let value = this.value.replace(/\D/g, '');
-            
+
             if (value.length <= 10) {
                 // Format as: 55 1234 5678
                 if (value.length > 6) {
@@ -327,11 +332,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Format as: +52 55 1234 5678
                 value = value.replace(/(\d{2})(\d{2})(\d{4})(\d{0,4})/, '+$1 $2 $3 $4');
             }
-            
+
             this.value = value;
         });
     }
-    
+
     function setLoadingState(loading) {
         if (loading) {
             submitBtn.disabled = true;
@@ -343,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function() {
             btnLoader.style.display = 'none';
         }
     }
-    
+
     function saveSubmissionData(formData) {
         const submissionData = {
             ...formData,
@@ -351,10 +356,10 @@ document.addEventListener('DOMContentLoaded', function() {
             timestamp: new Date().toISOString(),
             status: 'submitted'
         };
-        
+
         // Save to localStorage for reference
         saveToLocalStorage(`submission_${formData.reference_number}`, submissionData);
-        
+
         // Save to submissions list
         let submissions = getFromLocalStorage('loan_submissions') || [];
         submissions.push({
@@ -364,23 +369,23 @@ document.addEventListener('DOMContentLoaded', function() {
             date: new Date().toISOString(),
             status: 'submitted'
         });
-        
+
         // Keep only last 10 submissions
         if (submissions.length > 10) {
             submissions = submissions.slice(-10);
         }
-        
+
         saveToLocalStorage('loan_submissions', submissions);
     }
-    
+
     function showSuccessModal(referenceNumber) {
         const modal = document.getElementById('successModal');
         const referenceSpan = document.getElementById('referenceNumber');
-        
+
         if (modal && referenceSpan) {
             referenceSpan.textContent = referenceNumber;
             modal.style.display = 'flex';
-            
+
             // Auto-close after 10 seconds
             setTimeout(() => {
                 closeModal();
@@ -394,7 +399,7 @@ function closeModal() {
     const modal = document.getElementById('successModal');
     if (modal) {
         modal.style.display = 'none';
-        
+
         // Redirect to home page after closing
         setTimeout(() => {
             window.location.href = 'index.html';
@@ -436,7 +441,7 @@ function saveFormDraft() {
         comments: document.getElementById('comments').value,
         timestamp: new Date().toISOString()
     };
-    
+
     saveToLocalStorage('contact_form_draft', formData);
 }
 
@@ -449,7 +454,7 @@ function loadFormDraft() {
                 element.value = draft[key];
             }
         });
-        
+
         showToast('Se recuperó un borrador de tu formulario', 'info');
     }
 }
