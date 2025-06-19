@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setLoadingState(true);
         
         try {
-            // Verify reCAPTCHA (optional - can be skipped if not configured)
+            // Désactivation temporaire de reCAPTCHA
             let recaptchaToken = '';
             try {
                 recaptchaToken = await verifyRecaptcha();
@@ -168,22 +168,10 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
     
+    // --- Désactivation temporaire de reCAPTCHA ---
     async function verifyRecaptcha() {
-        return new Promise((resolve, reject) => {
-            if (typeof grecaptcha === 'undefined') {
-                reject('reCAPTCHA not loaded');
-                return;
-            }
-            
-            grecaptcha.ready(() => {
-                grecaptcha.execute('6LfXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', { action: 'loan_application' })
-                    .then(token => {
-                        console.log('reCAPTCHA token obtained');
-                        resolve(token);
-                    })
-                    .catch(reject);
-            });
-        });
+        // Désactivation temporaire : on renvoie juste une chaîne vide
+        return '';
     }
     
     async function sendEmail(formData) {
